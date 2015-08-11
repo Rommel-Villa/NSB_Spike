@@ -1,13 +1,7 @@
-﻿using System.Dynamic;
+﻿using System;
 using Autofac;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NServiceBus;
 using NServiceBus.Features;
-using NServiceBus.Persistence;
 using NServiceBusDemo.Common.Model;
 using NServiceBusDemo.Messages.Commands;
 
@@ -56,7 +50,7 @@ namespace NServiceBusDemo.Main
             }
         }
 
-        static void Main(string[] args)
+        static void Main()
         {
             var builder = new ContainerBuilder();
 
@@ -68,7 +62,8 @@ namespace NServiceBusDemo.Main
 
             configuration.UseContainer<AutofacBuilder>(c => c.ExistingLifetimeScope(container));
 
-            configuration.UseTransport<AzureStorageQueueTransport>();
+            configuration.UseTransport<AzureStorageQueueTransport>()
+                .ConnectionString("UseDevelopmentStorage=true");
             configuration.UsePersistence<AzureStoragePersistence>();
             configuration.UseSerialization<JsonSerializer>();
 

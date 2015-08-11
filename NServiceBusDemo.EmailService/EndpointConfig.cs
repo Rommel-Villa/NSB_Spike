@@ -17,7 +17,9 @@ namespace NServiceBusDemo.EmailService
 
             configuration.UseContainer<AutofacBuilder>(c => c.ExistingLifetimeScope(container));
 
-            configuration.UseTransport<AzureStorageQueueTransport>();
+            
+            configuration.UseTransport<AzureStorageQueueTransport>()
+                .ConnectionString("UseDevelopmentStorage=true");
             configuration.UsePersistence<AzureStoragePersistence>();
             configuration.UseSerialization<JsonSerializer>();
 
